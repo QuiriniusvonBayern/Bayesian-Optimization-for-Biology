@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 from typing import Tuple
 
-def load_data_to_df(path: Path, parameter_row_names: list, target_row_names: list) -> Tuple[pd.DataFrame, np.ndarray, np.ndarray]:
+def load_data_to_df(path: Path, parameter_row_names: list, target_row_names: list, profile: list) -> Tuple[pd.DataFrame, np.ndarray, np.ndarray]:
     """
     Load CSV data and prepare it for machine learning.
 
@@ -11,7 +11,7 @@ def load_data_to_df(path: Path, parameter_row_names: list, target_row_names: lis
         path: Path to the CSV file
         parameter_row_names: List of column names to use as input features (X)
         target_row_names: List of column names to use as target values (y)
-
+        profile: List of column names to drop from the DataFrame
     Returns:
         Tuple containing:
         - formatted_df: DataFrame with all processed data
@@ -19,7 +19,7 @@ def load_data_to_df(path: Path, parameter_row_names: list, target_row_names: lis
         - train_Y_raw: 2D numpy array of shape (n_samples, 1) for training targets
     """
     df: pd.DataFrame = pd.read_csv(path)
-
+    df = df.drop(profile).reset_index(drop=True)
     missing_params = [p for p in parameter_row_names if p not in df.columns]
     missing_targets = [t for t in target_row_names if t not in df.columns]
     if missing_params or missing_targets:
