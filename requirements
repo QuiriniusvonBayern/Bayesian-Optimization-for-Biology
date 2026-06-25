@@ -1,1 +1,3 @@
 ipympl
+plotly
+nbformat>=4.2.0
