@@ -4,3 +4,6 @@
 # Caches
 .ipynb_checkpoints/
 __pycache__/
+
+# Results
+plots/
